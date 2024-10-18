@@ -57,6 +57,13 @@ feature_mapping = {
     'Subject Combinations': 'Subject Combinations'
 }
 
+# Sidebar for predefined sample selection
+st.sidebar.title("Settings")
+selected_sample_name = st.sidebar.selectbox(
+    "Select a Sample",
+    options=[None] + ['Sample 1', 'Sample 2']
+)
+
 predefined_samples = {
     "Sample 1": {
         'Internet Availability': 'Yes', 'Access to Textbooks': 'Yes', 'Attendance Rate': 83, 'Class Participation Score': 76, 
@@ -74,13 +81,6 @@ predefined_samples = {
     }
 }
 
-# Sidebar for predefined sample selection
-st.sidebar.title("Settings")
-selected_sample_name = st.sidebar.selectbox(
-    "Select a Sample",
-    options=[None] + list(predefined_samples.keys())
-)
-
 # Get the selected sample
 selected_sample = predefined_samples.get(selected_sample_name, {})
 
@@ -97,9 +97,9 @@ user_input = {}
 with col1:
     st.subheader("Part 1")
     user_input['Internet Availability'] = st.selectbox(
-        "Internet Availability:", ['Yes', 'No'], index=['Yes', 'No'].index(selected_sample.get('Internet Availability', '')))
+        "Internet Availability:", ['Yes', 'No'], index=0 if selected_sample.get('Internet Availability') == 'Yes' else 1)
     user_input['Access to Textbooks'] = st.selectbox(
-        "Access to Textbooks:", ['Yes', 'No'], index=['Yes', 'No'].index(selected_sample.get('Access to Textbooks', '')))
+        "Access to Textbooks:", ['Yes', 'No'], index=0 if selected_sample.get('Access to Textbooks') == 'Yes' else 1)
     user_input['Attendance Rate'] = st.text_input(
         "Attendance Rate (0-100):", value=str(selected_sample.get('Attendance Rate', '')))
     user_input['Class Participation Score'] = st.text_input(
@@ -109,7 +109,7 @@ with col1:
     user_input['Hours Spent on Self-study'] = st.text_input(
         "Hours Spent on Self-study (0-20):", value=str(selected_sample.get('Hours Spent on Self-study', '')))
     user_input['Type of Activity'] = st.selectbox(
-        "Type of Activity:", ['Music', 'Science Club', 'Drama', 'Sports'], index=['Music', 'Science Club', 'Drama', 'Sports'].index(selected_sample.get('Type of Activity', '')))
+        "Type of Activity:", ['Music', 'Science Club', 'Drama', 'Sports'], index=['Music', 'Science Club', 'Drama', 'Sports'].index(selected_sample.get('Type of Activity', 'Music')))
     user_input['Hours per Week'] = st.text_input(
         "Hours per Week (0-15):", value=str(selected_sample.get('Hours per Week', '')))
     user_input['Extra Tutoring Hours'] = st.text_input(
@@ -120,14 +120,14 @@ with col2:
     user_input['Library Hours Used'] = st.text_input(
         "Library Hours Used (0-10):", value=str(selected_sample.get('Library Hours Used', '')))
     user_input['Parental Education Level'] = st.selectbox(
-        "Parental Education Level:", ['Secondary', 'Primary', 'Tertiary'], index=['Secondary', 'Primary', 'Tertiary'].index(selected_sample.get('Parental Education Level', '')))
+        "Parental Education Level:", ['Secondary', 'Primary', 'Tertiary'], index=['Secondary', 'Primary', 'Tertiary'].index(selected_sample.get('Parental Education Level', 'Secondary')))
     user_input['Access to Study Materials'] = st.selectbox(
-        "Access to Study Materials:", ['Yes', 'No'], index=['Yes', 'No'].index(selected_sample.get('Access to Study Materials', '')))
+        "Access to Study Materials:", ['Yes', 'No'], index=0 if selected_sample.get('Access to Study Materials') == 'Yes' else 1)
     user_input['Gender'] = st.selectbox(
-        "Gender:", ['Male', 'Female'], index=['Male', 'Female'].index(selected_sample.get('Gender', '')))
+        "Gender:", ['Male', 'Female'], index=0 if selected_sample.get('Gender') == 'Male' else 1)
     user_input['Subject Combinations'] = st.selectbox(
-        "Subject Combinations:", ['Applied commerce', 'Pure science', 'Theoretical Arts', 'Applied Arts', 'Theoretical commerce', 'Biological Science', 'Applied science'],
-        index=['Applied commerce', 'Pure science', 'Theoretical Arts', 'Applied Arts', 'Theoretical commerce', 'Biological Science', 'Applied science'].index(selected_sample.get('Subject Combinations', '')))
+        "Subject Combinations:", ['Applied commerce', 'Pure science', 'Theoretical Arts', 'Applied Arts', 'Theoretical commerce', 'Biological Science', 'Applied science'], 
+        index=['Applied commerce', 'Pure science', 'Theoretical Arts', 'Applied Arts', 'Theoretical commerce', 'Biological Science', 'Applied science'].index(selected_sample.get('Subject Combinations', 'Applied commerce')))
     
     # Fields without limits
     user_input['Teacher-to-student Ratio'] = st.text_input(
@@ -149,7 +149,3 @@ if st.button("Predict"):
     # Display Results
     st.subheader("Prediction Result")
     st.write(f"The model predicts: **{prediction[0]}**")
-
-
-
-
