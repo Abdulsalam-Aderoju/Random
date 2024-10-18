@@ -27,8 +27,6 @@ def inject_css():
 # Call the function to inject CSS
 inject_css()
 
-
-
 # Load saved pipeline (includes both preprocessor and model)
 @st.cache_resource
 def load_pipeline():
@@ -97,26 +95,49 @@ col1, col2 = st.columns(2)
 # Create input fields for all features using full names
 user_input = {}
 with col1:
-    st.subheader("Features - Part 1")
-    for i, (full_name, short_name) in enumerate(feature_mapping.items()):
-        if i < len(feature_mapping) // 2:  # First half of features
-            value = selected_sample.get(short_name, "")
-            if isinstance(value, int):
-                # Use text_input for integers to remove + and - adjustments
-                user_input[short_name] = st.text_input(f"{full_name}:", value=str(value))
-            else:
-                user_input[short_name] = st.text_input(f"{full_name}:", value=str(value))
+    st.subheader("Part 1")
+    user_input['Internet Availability'] = st.selectbox(
+        "Internet Availability:", ['Yes', 'No'], index=['Yes', 'No'].index(selected_sample.get('Internet Availability', '')))
+    user_input['Access to Textbooks'] = st.selectbox(
+        "Access to Textbooks:", ['Yes', 'No'], index=['Yes', 'No'].index(selected_sample.get('Access to Textbooks', '')))
+    user_input['Attendance Rate'] = st.text_input(
+        "Attendance Rate (0-100):", value=str(selected_sample.get('Attendance Rate', '')))
+    user_input['Class Participation Score'] = st.text_input(
+        "Class Participation Score (0-100):", value=str(selected_sample.get('Class Participation Score', '')))
+    user_input['Homework Completion Rate'] = st.text_input(
+        "Homework Completion Rate (0-100):", value=str(selected_sample.get('Homework Completion Rate', '')))
+    user_input['Hours Spent on Self-study'] = st.text_input(
+        "Hours Spent on Self-study (0-20):", value=str(selected_sample.get('Hours Spent on Self-study', '')))
+    user_input['Type of Activity'] = st.selectbox(
+        "Type of Activity:", ['Music', 'Science Club', 'Drama', 'Sports'], index=['Music', 'Science Club', 'Drama', 'Sports'].index(selected_sample.get('Type of Activity', '')))
+    user_input['Hours per Week'] = st.text_input(
+        "Hours per Week (0-15):", value=str(selected_sample.get('Hours per Week', '')))
+    user_input['Extra Tutoring Hours'] = st.text_input(
+        "Extra Tutoring Hours (0-5):", value=str(selected_sample.get('Extra Tutoring Hours', '')))
 
 with col2:
-    st.subheader("Features - Part 2")
-    for i, (full_name, short_name) in enumerate(feature_mapping.items()):
-        if i >= len(feature_mapping) // 2:  # Second half of features
-            value = selected_sample.get(short_name, "")
-            if isinstance(value, int):
-                # Use text_input for integers to remove + and - adjustments
-                user_input[short_name] = st.text_input(f"{full_name}:", value=str(value))
-            else:
-                user_input[short_name] = st.text_input(f"{full_name}:", value=str(value))
+    st.subheader("Part 2")
+    user_input['Library Hours Used'] = st.text_input(
+        "Library Hours Used (0-10):", value=str(selected_sample.get('Library Hours Used', '')))
+    user_input['Parental Education Level'] = st.selectbox(
+        "Parental Education Level:", ['Secondary', 'Primary', 'Tertiary'], index=['Secondary', 'Primary', 'Tertiary'].index(selected_sample.get('Parental Education Level', '')))
+    user_input['Access to Study Materials'] = st.selectbox(
+        "Access to Study Materials:", ['Yes', 'No'], index=['Yes', 'No'].index(selected_sample.get('Access to Study Materials', '')))
+    user_input['Gender'] = st.selectbox(
+        "Gender:", ['Male', 'Female'], index=['Male', 'Female'].index(selected_sample.get('Gender', '')))
+    user_input['Subject Combinations'] = st.selectbox(
+        "Subject Combinations:", ['Applied commerce', 'Pure science', 'Theoretical Arts', 'Applied Arts', 'Theoretical commerce', 'Biological Science', 'Applied science'],
+        index=['Applied commerce', 'Pure science', 'Theoretical Arts', 'Applied Arts', 'Theoretical commerce', 'Biological Science', 'Applied science'].index(selected_sample.get('Subject Combinations', '')))
+    
+    # Fields without limits
+    user_input['Teacher-to-student Ratio'] = st.text_input(
+        "Teacher-to-student Ratio:", value=str(selected_sample.get('Teacher-to-student Ratio', '')))
+    user_input['Age'] = st.text_input(
+        "Age:", value=str(selected_sample.get('Age', '')))
+    user_input['Number of Siblings'] = st.text_input(
+        "Number of Siblings:", value=str(selected_sample.get('Number of Siblings', '')))
+    user_input['Household Income'] = st.text_input(
+        "Household Income:", value=str(selected_sample.get('Household Income', '')))
 
 if st.button("Predict"):
     # Ensure the DataFrame columns match the feature names used during training
@@ -128,5 +149,7 @@ if st.button("Predict"):
     # Display Results
     st.subheader("Prediction Result")
     st.write(f"The model predicts: **{prediction[0]}**")
+
+
 
 
