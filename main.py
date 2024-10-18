@@ -96,33 +96,41 @@ col1, col2 = st.columns(2)
 user_input = {}
 with col1:
     st.subheader("Part 1")
+    # Using get with default 'Yes' ensures a fallback even if the selected_sample is missing data
     user_input['Internet Availability'] = st.selectbox(
         "Internet Availability:", 
         ['Yes', 'No'], 
         index=['Yes', 'No'].index(selected_sample.get('Internet Availability', 'Yes'))
     )
+    
     user_input['Access to Textbooks'] = st.selectbox(
         "Access to Textbooks:", 
         ['Yes', 'No'], 
         index=['Yes', 'No'].index(selected_sample.get('Access to Textbooks', 'Yes'))
     )
+    
     user_input['Attendance Rate'] = st.text_input(
         "Attendance Rate (0-100):", value=str(selected_sample.get('Attendance Rate', '0'))
     )
+    
     user_input['Class Participation Score'] = st.text_input(
         "Class Participation Score (0-100):", value=str(selected_sample.get('Class Participation Score', '0'))
     )
+    
     user_input['Homework Completion Rate'] = st.text_input(
         "Homework Completion Rate (0-100):", value=str(selected_sample.get('Homework Completion Rate', '0'))
     )
+    
     user_input['Hours Spent on Self-study'] = st.text_input(
         "Hours Spent on Self-study (0-20):", value=str(selected_sample.get('Hours Spent on Self-study', '0'))
     )
+    
     user_input['Type of Activity'] = st.selectbox(
         "Type of Activity:", 
         ['Music', 'Science Club', 'Drama', 'Sports'], 
         index=['Music', 'Science Club', 'Drama', 'Sports'].index(selected_sample.get('Type of Activity', 'Music'))
     )
+    
     user_input['Hours per Week'] = st.text_input(
         "Hours per Week (0-15):", value=str(selected_sample.get('Hours per Week', '0'))
     )
@@ -135,35 +143,44 @@ with col1:
 
 with col2:
     st.subheader("Part 2")
+    
     user_input['Parental Education Level'] = st.selectbox(
         "Parental Education Level:", 
         ['Secondary', 'Primary', 'Tertiary'], 
         index=['Secondary', 'Primary', 'Tertiary'].index(selected_sample.get('Parental Education Level', 'Secondary'))
     )
+    
     user_input['Household Income'] = st.text_input(
-        "Household Income:", value=str(selected_sample.get('Household Income', ''))
+        "Household Income:", value=str(selected_sample.get('Household Income', '0'))
     )
+    
     user_input['Number of Siblings'] = st.text_input(
-        "Number of Siblings:", value=str(selected_sample.get('Number of Siblings', ''))
+        "Number of Siblings:", value=str(selected_sample.get('Number of Siblings', '0'))
     )
+    
     user_input['Library Hours Used'] = st.text_input(
         "Library Hours Used (0-10):", value=str(selected_sample.get('Library Hours Used', '0'))
     )
+    
     user_input['Teacher-to-student Ratio'] = st.text_input(
-        "Teacher-to-student Ratio:", value=str(selected_sample.get('Teacher-to-student Ratio', ''))
+        "Teacher-to-student Ratio:", value=str(selected_sample.get('Teacher-to-student Ratio', '0'))
     )
+    
     user_input['Access to Study Materials'] = st.selectbox(
         "Access to Study Materials:", 
         ['Yes', 'No'], 
         index=['Yes', 'No'].index(selected_sample.get('Access to Study Materials', 'Yes'))
     )
+    
     user_input['Extra Tutoring Hours'] = st.text_input(
         "Extra Tutoring Hours (0-5):", value=str(selected_sample.get('Extra Tutoring Hours', '0'))
     )
+    
     user_input['Age'] = st.text_input(
-        "Age:", value=str(selected_sample.get('Age', ''))
+        "Age:", value=str(selected_sample.get('Age', '0'))
     )
-
+    
+    
     user_input['Subject Combinations'] = st.selectbox(
         "Subject Combinations:", 
         ['Applied commerce', 'Pure science', 'Theoretical Arts', 'Applied Arts', 
@@ -173,6 +190,7 @@ with col2:
                    selected_sample.get('Subject Combinations', 'Applied commerce')
                )
     )
+
 
 
 
